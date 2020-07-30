@@ -1,6 +1,6 @@
 import unittest
 import os
-import fileReader
+import commonScripts.fileReader
 
 testDataRelativePath = "test_data"
 scriptDir = os.path.dirname(os.path.abspath(__file__))
