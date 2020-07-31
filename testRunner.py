@@ -8,7 +8,7 @@ testScriptsPath = []
 
 for root, dirs, files in os.walk(scriptsPath):
     for file in files:
-        if testLabel in file and file.endswith(pyExtensionLabel):
+        if file.startswith(testLabel) and file.endswith(pyExtensionLabel):
             filePath = os.path.join(root, file)
             testScriptsPath.append(filePath)
 
@@ -16,8 +16,8 @@ for root, dirs, files in os.walk(scriptsPath):
 def runAllTests():
     command = "python3 -m unittest "
     for file in testScriptsPath:
-        command += file
-        os.system(command)
+        runCommand = command + file
+        os.system(runCommand)
 
 runAllTests()
 

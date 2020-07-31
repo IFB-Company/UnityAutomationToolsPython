@@ -11,7 +11,7 @@ from commonScripts import filesSearcher
 
 testDataRelativePath = "test_data"
 testDataPath = os.path.join(scriptDir, testDataRelativePath)
-class SceneSwitcherTests(unittest.TestCase):
+class UnityScriptsTests(unittest.TestCase):
 
     def test_fileReader(self):
         dataDirName = "readerData"
