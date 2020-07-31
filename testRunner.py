@@ -1,1 +1,4 @@
-import unityScripts.test_unityScripts
+#TEST
+from unityScripts import test_unityScripts
+
+test_unityScripts.runTest()

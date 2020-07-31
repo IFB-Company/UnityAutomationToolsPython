@@ -43,12 +43,6 @@ namespace GameEditorDebugHelpers
             LoadSceneByName("BattleScene");
         }
         
-        
-        // [MenuItem("SceneSwitcher/Battle Scene")]
-        // static void LoadBattleScene()
-        // {
-        //     LoadSceneByName("BattleScene");
-        // }
 
         static void LoadSceneByName(string sceneName)
         {

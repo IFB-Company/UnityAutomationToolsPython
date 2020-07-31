@@ -1,10 +1,15 @@
+import sys
 import unittest
 import os
-import commonScripts.fileReader
+
+
+scriptDir = os.path.dirname(os.path.abspath(__file__))
+if sys.path[0] != scriptDir:
+    sys.path[0] = scriptDir
+
+from commonScripts import fileReader
 
 testDataRelativePath = "test_data"
-scriptDir = os.path.dirname(os.path.abspath(__file__))
-print("Absoule path: " + scriptDir)
 class SceneSwitcherTests(unittest.TestCase):
 
     def test_IsOpenSourceFile(self):
@@ -20,6 +25,9 @@ class SceneSwitcherTests(unittest.TestCase):
         self.assertTrue('for' in fileReadedData)
         self.assertTrue('tests' in fileReadedData)
         return 0
+
+def runTest():
+    unittest.main()
 
 if __name__ == '__main__':
     unittest.main()
