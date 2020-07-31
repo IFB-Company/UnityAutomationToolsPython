@@ -28,8 +28,19 @@ class SceneSwitcherTests(unittest.TestCase):
         self.assertTrue('tests' in fileReadedData)
         return 0
     
-    #def test_filesSearcher(self):
-        #testDirName = 'testUnityProject_0'
+    def test_filesSearcher(self):
+        testDirName = 'testUnityProject_0'
+        dirPath = os.path.join(testDataPath, testDirName)
+        filesData = filesSearcher.findFilesByType(dirPath, ".unity")
+
+        filePath_0 = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets/Scenes/Main.unity'
+        filePath_1 = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets/Scenes/Levels/Level_0.unity'
+        filePath_2 = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets/Scenes/Levels/Level_1.unity'
+        self.assertTrue(len(filesData) > 0)
+        self.assertTrue(filePath_0 in filesData)
+        self.assertTrue(filePath_1 in filesData)
+        self.assertTrue(filePath_2 in filesData)
+        self.assertTrue(len(filesData) == 3)
 
 
 def runTest():

@@ -10,7 +10,6 @@ for root, dirs, files in os.walk(scriptsPath):
     for file in files:
         if testLabel in file and file.endswith(pyExtensionLabel):
             filePath = os.path.join(root, file)
-            print("Test file found! Path: ", filePath)
             testScriptsPath.append(filePath)
 
 
