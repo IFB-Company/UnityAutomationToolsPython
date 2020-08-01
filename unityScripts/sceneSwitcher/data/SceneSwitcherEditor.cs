@@ -3,7 +3,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace GameEditorDebugHelpers
-{
+{       
     public class SceneSwitcherEditor : MonoBehaviour
     {
 
