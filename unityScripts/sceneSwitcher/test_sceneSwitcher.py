@@ -8,6 +8,7 @@ if sys.path[0] != scriptDir:
 
 import sceneSwitcherGenerator
 
+sceneFullPath = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets/Scenes/Levels/Level_1.unity'
 
 class SceneSwitcherTests(unittest.TestCase):
     def test_generateFile(self):
@@ -30,12 +31,29 @@ class SceneSwitcherTests(unittest.TestCase):
         self.assertEqual(fileText, readedContent)
     
     def test_cropScenePathForUnity(self):
-        sceneFullPath = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets/Scenes/Levels/Level_1.unity'
         unityCorrectPath = 'Assets/Scenes/Levels/Level_1.unity'
 
         croppedPath = sceneSwitcherGenerator.cropFullScenePathForRelativeInUnity(sceneFullPath)
 
         self.assertEqual(croppedPath, unityCorrectPath)
+
+    def test_getSceneNameByCroppedPath(self):
+        croppedPath = sceneSwitcherGenerator.cropFullScenePathForRelativeInUnity(sceneFullPath)
+        sceneName = 'Level_1'
+
+        generatedName = sceneSwitcherGenerator.getSceneNameByCroppedPath(croppedPath)
+
+        self.assertEqual(generatedName, sceneName)
+
+    def test_generateAttributeForSceneSwitchFunc_CS(self):
+        sceneName = 'Level_1'
+        windowName = 'UAT_Scenes'
+        contextPath = windowName + '/' + sceneName
+        completeAttrCS = f'[MenuItem("{contextPath}")]'
+
+        generatedAttr = sceneSwitcherGenerator.generateAttributeForSceneSwitchFunc_CS(windowName, sceneName)
+
+        self.assertEqual(generatedAttr,completeAttrCS)
 
 if __name__ == "__main__":
     unittest.main()
