@@ -1,9 +1,28 @@
 import os
 
 
-def generateEditorFunctionForScene_CS(fullScenePath):
+def generateEditorFunctionForScene_CS(toolPath, fullScenePath):
     croppedPath = cropFullScenePathForRelativeInUnity(fullScenePath)
     pureSceneName = getSceneNameByCroppedPath(croppedPath)
+
+    funcText = ''
+    menuItemAttr = generateAttributeForSceneSwitchFunc_CS(toolPath, pureSceneName)
+    funcName = generateLoadFunctionName_CS(pureSceneName)
+
+    pasteFlag = '[f]'
+    openSceneUnityFuncName = f'EditorSceneManager.OpenScene("{pasteFlag}");'
+    openSceneUnityFuncName = openSceneUnityFuncName.replace(pasteFlag, croppedPath)
+
+    funcText += '\n\t' + menuItemAttr
+    funcText += f'\n\tstatic void {funcName}'
+    funcText += '\n\t{'
+    funcText += f'\n\t\t{openSceneUnityFuncName}'
+    funcText += '\n\t}'
+
+    return funcText
+
+def generateLoadFunctionName_CS(pureSceneName):
+    return 'Load_' + pureSceneName + '()'
 
 def generateAttributeForSceneSwitchFunc_CS(toolPath, pureSceneName):
     toolPathForAttr = os.path.join(toolPath, pureSceneName)

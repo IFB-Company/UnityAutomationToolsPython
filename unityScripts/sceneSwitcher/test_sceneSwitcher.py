@@ -55,5 +55,34 @@ class SceneSwitcherTests(unittest.TestCase):
 
         self.assertEqual(generatedAttr,completeAttrCS)
 
+    def test_generateLoadFunctionName_CS(self):
+        sceneName = 'Level_1'
+        neededName = 'Load_Level_1()'
+
+        generatedName = sceneSwitcherGenerator.generateLoadFunctionName_CS(sceneName)
+
+        self.assertEqual(generatedName, neededName)
+
+    def test_generateEditorFunctionForScene_CS(self):
+        #[MenuItem("UAT_Scenes/Level_1")]
+        #static void Load_Level_1()
+        #{
+            #EditorSceneManager.OpenScene("Assets/Scenes/Levels/Level_1.unity");
+        #}
+        windowName = 'UAT_Scenes'
+        sceneName = 'Level_1'
+        line_0 = f'\n\t[MenuItem("UAT_Scenes/Level_1")]'
+        line_1 = '\n\tstatic void Load_Level_1()'
+        line_2 = '\n\t{'
+        line_3 = '\n\t\tEditorSceneManager.OpenScene("Assets/Scenes/Levels/Level_1.unity");'
+        line_4 = '\n\t}'
+
+        fullText = line_0 + line_1 + line_2 + line_3 + line_4
+        
+        generatedFuncText = sceneSwitcherGenerator.generateEditorFunctionForScene_CS(windowName, sceneFullPath)
+
+        self.assertEqual(fullText, generatedFuncText)
+
+
 if __name__ == "__main__":
     unittest.main()
