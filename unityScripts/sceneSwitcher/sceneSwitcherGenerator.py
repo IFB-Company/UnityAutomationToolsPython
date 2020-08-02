@@ -1,5 +1,33 @@
 import os
 
+CLASS_NAME_CS = 'SceneSwitcher'
+DEFAULT_NAMESPACE_CS = 'UAT_Generated'
+
+FUNCS_BODY_KEY = '[FUNC]'
+
+def generateFullSceneSwitcherClassByScenesList_CS(scenesAbsPathCollection):
+    classBody = generateSceneSwitcherClassBody(CLASS_NAME_CS)
+    
+    return ''
+
+def generateSceneSwitcherClassBody(className):
+    lines = [
+            'using UnityEditor;',
+            '\nusing UnityEditor.SceneManagement;',
+            '\nusing UnityEngine;',
+            '\n',
+            f'\nnamespace {DEFAULT_NAMESPACE_CS}',
+            '\n{',
+            f'\n\tpublic class {className} : MonoBehaviour',
+            '\n\t{',
+            f'\n\t\t{FUNCS_BODY_KEY}',
+            '\n\t}',
+            '\n}'
+        ]
+    returnData = ''
+    for line in lines:
+        returnData += line
+    return returnData
 
 def generateEditorFunctionForScene_CS(toolPath, fullScenePath):
     croppedPath = cropFullScenePathForRelativeInUnity(fullScenePath)
