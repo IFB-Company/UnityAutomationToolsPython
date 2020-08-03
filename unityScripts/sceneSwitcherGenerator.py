@@ -5,14 +5,31 @@ scriptDir = os.path.dirname(os.path.abspath(__file__))
 if sys.path[0] != scriptDir:
     sys.path[0] = scriptDir
 
+import global_info
 
-from .commonScripts import filesSearcher
+from commonScripts import filesSearcher
 
 TOOL_PATH = 'UAT_SceneSwitcher'
 CLASS_NAME_CS = 'SceneSwitcher'
 DEFAULT_NAMESPACE_CS = 'UAT_Generated'
+SCENE_SWITCHER_FILE_NAME = "SceneSwitcher.cs"
 
 FUNCS_BODY_KEY = '[FUNC]'
+
+
+def createSceneSwitcherScriptForUnityProject(projectAssetsPath):
+    pathToScript = os.path.join(projectAssetsPath, global_info.SCRIPTS_DIR_NAME, global_info.EDITOR_FOLDER_NAME, SCENE_SWITCHER_FILE_NAME)
+
+    scriptContent = generateFullSceneSwitcherClassByScenesList_CS(projectAssetsPath)
+
+    pathWithoutFile = os.path.dirname(pathToScript)
+    if not os.path.exists(pathWithoutFile):
+        os.makedirs(pathWithoutFile)
+
+    file = open(pathToScript, 'w')
+    file.write(scriptContent)
+    file.close()
+    print("File generated?")
 
 def generateFullSceneSwitcherClassByScenesList_CS(scenesAbsPathCollection):
     classBody = generateSceneSwitcherClassBody(CLASS_NAME_CS)
@@ -22,7 +39,8 @@ def generateFullSceneSwitcherClassByScenesList_CS(scenesAbsPathCollection):
     fullLines.append(splitted[0])
     
     scenesAbsPaths = filesSearcher.findFilesByType(scenesAbsPathCollection, '.unity')
-
+    if len(scenesAbsPathCollection) <= 0:
+        raise Exception("No scenes found!")
     for scenePath in scenesAbsPaths:
         funcBody = generateEditorFunctionForScene_CS(TOOL_PATH, scenePath)
         fullLines.append(funcBody)
@@ -77,7 +95,13 @@ def generateEditorFunctionForScene_CS(toolPath, fullScenePath):
     return funcText
 
 def generateLoadFunctionName_CS(pureSceneName):
-    return 'Load_' + pureSceneName + '()'
+    replaced1 = pureSceneName.replace(' ', '_')
+    replaced2 = replaced1.replace('-','_')
+    replaced2 = replaced2.replace('(','_')
+    replaced2 = replaced2.replace(')','_')
+    replaced2 = replaced2.replace('&','_')
+    replaced2 = replaced2.replace('&&','_')
+    return 'Load_' + replaced2 + '()'
 
 def generateAttributeForSceneSwitchFunc_CS(toolPath, pureSceneName):
     toolPathForAttr = os.path.join(toolPath, pureSceneName)
@@ -110,3 +134,12 @@ def generateFile(path, fileName, fileContent):
     scriptFile.write(fileContent)
     scriptFile.close()
     return fullPath
+
+if len(sys.argv) > 2:
+    print("Some args here!")
+    print(sys.argv)
+    if sys.argv[1] == 'run': 
+        unityAssetsPath = sys.argv[2]
+        if os.path.exists(unityAssetsPath):
+            createSceneSwitcherScriptForUnityProject(unityAssetsPath)
+            print("Create data in: " + unityAssetsPath)

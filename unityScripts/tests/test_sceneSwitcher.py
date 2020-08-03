@@ -7,7 +7,7 @@ if sys.path[0] != scriptDir:
     sys.path[0] = scriptDir
 
 from ...unityScripts import sceneSwitcherGenerator 
-
+from ...unityScripts import global_info
 from ..commonScripts import filesSearcher
 
 
@@ -171,10 +171,19 @@ class SceneSwitcherTests(unittest.TestCase):
         expectedText = ''
         for line in lines:
             expectedText += line 
-            
+
         generatedText = sceneSwitcherGenerator.generateFullSceneSwitcherClassByScenesList_CS(scenesPath)
         self.maxDiff = 5959
         self.assertEqual(expectedText, generatedText)
+
+    def test_createSceneSwitcherScriptForUnityProject(self):
+        testUnityProjectAssetsPath = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/tests/test_data/testUnityProject_0/Assets'
+        
+        pathToSceneSwitcherScript = os.path.join(testUnityProjectAssetsPath, global_info.SCRIPTS_DIR_NAME, global_info.EDITOR_FOLDER_NAME, sceneSwitcherGenerator.SCENE_SWITCHER_FILE_NAME)
+        
+        sceneSwitcherGenerator.createSceneSwitcherScriptForUnityProject(testUnityProjectAssetsPath)
+        self.assertTrue(os.path.exists(pathToSceneSwitcherScript))
+
 
 if __name__ == "__main__":
     unittest.main()
