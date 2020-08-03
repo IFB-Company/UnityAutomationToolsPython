@@ -1,5 +1,14 @@
 import os
+import sys
 
+scriptDir = os.path.dirname(os.path.abspath(__file__))
+if sys.path[0] != scriptDir:
+    sys.path[0] = scriptDir
+
+
+from .commonScripts import filesSearcher
+
+TOOL_PATH = 'UAT_SceneSwitcher'
 CLASS_NAME_CS = 'SceneSwitcher'
 DEFAULT_NAMESPACE_CS = 'UAT_Generated'
 
@@ -7,8 +16,26 @@ FUNCS_BODY_KEY = '[FUNC]'
 
 def generateFullSceneSwitcherClassByScenesList_CS(scenesAbsPathCollection):
     classBody = generateSceneSwitcherClassBody(CLASS_NAME_CS)
+    splitted = classBody.split(FUNCS_BODY_KEY)
     
-    return ''
+    fullLines = []
+    fullLines.append(splitted[0])
+    
+    scenesAbsPaths = filesSearcher.findFilesByType(scenesAbsPathCollection, '.unity')
+
+    for scenePath in scenesAbsPaths:
+        funcBody = generateEditorFunctionForScene_CS(TOOL_PATH, scenePath)
+        fullLines.append(funcBody)
+        fullLines.append('\n')
+
+    fullLines.append(splitted[1])
+
+    completeText = ''
+
+    for line in fullLines:
+        completeText += line
+
+    return completeText
 
 def generateSceneSwitcherClassBody(className):
     lines = [
@@ -41,11 +68,11 @@ def generateEditorFunctionForScene_CS(toolPath, fullScenePath):
     openSceneUnityFuncName = f'EditorSceneManager.OpenScene("{pasteFlag}");'
     openSceneUnityFuncName = openSceneUnityFuncName.replace(pasteFlag, croppedPath)
 
-    funcText += '\n\t' + menuItemAttr
-    funcText += f'\n\tstatic void {funcName}'
-    funcText += '\n\t{'
-    funcText += f'\n\t\t{openSceneUnityFuncName}'
-    funcText += '\n\t}'
+    funcText += '\n\t\t' + menuItemAttr
+    funcText += f'\n\t\tstatic void {funcName}'
+    funcText += '\n\t\t{'
+    funcText += f'\n\t\t\t{openSceneUnityFuncName}'
+    funcText += '\n\t\t}'
 
     return funcText
 

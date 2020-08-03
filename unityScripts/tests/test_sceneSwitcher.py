@@ -6,9 +6,11 @@ scriptDir = os.path.dirname(os.path.abspath(__file__))
 if sys.path[0] != scriptDir:
     sys.path[0] = scriptDir
 
-import sceneSwitcherGenerator
+from ...unityScripts import sceneSwitcherGenerator 
 
 from ..commonScripts import filesSearcher
+
+
 
 sceneFullPath = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets/Scenes/Levels/Level_1.unity'
 
@@ -73,11 +75,11 @@ class SceneSwitcherTests(unittest.TestCase):
         #}
         windowName = 'UAT_Scenes'
         sceneName = 'Level_1'
-        line_0 = f'\n\t[MenuItem("UAT_Scenes/Level_1")]'
-        line_1 = '\n\tstatic void Load_Level_1()'
-        line_2 = '\n\t{'
-        line_3 = '\n\t\tEditorSceneManager.OpenScene("Assets/Scenes/Levels/Level_1.unity");'
-        line_4 = '\n\t}'
+        line_0 = f'\n\t\t[MenuItem("UAT_Scenes/Level_1")]'
+        line_1 = '\n\t\tstatic void Load_Level_1()'
+        line_2 = '\n\t\t{'
+        line_3 = '\n\t\t\tEditorSceneManager.OpenScene("Assets/Scenes/Levels/Level_1.unity");'
+        line_4 = '\n\t\t}'
 
         fullText = line_0 + line_1 + line_2 + line_3 + line_4
         
@@ -114,7 +116,7 @@ class SceneSwitcherTests(unittest.TestCase):
         className = sceneSwitcherGenerator.CLASS_NAME_CS
         defaultNameSpace = sceneSwitcherGenerator.DEFAULT_NAMESPACE_CS
         
-        scenesPath = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets'
+        scenesPath = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/tests/test_data/testUnityProject_0/Assets'
         scenesAbsPathList = filesSearcher.findFilesByType(scenesPath, '.unity')
 
         toolPath = 'UAT_SceneSwitcher'
@@ -146,21 +148,22 @@ class SceneSwitcherTests(unittest.TestCase):
             '\n{',
             f'\n\tpublic class {className} : MonoBehaviour',
             '\n\t{',
+            '\n\t\t',
             f'\n\t\t{scene1Attr}',
             f'\n\t\tstatic void {scene1FuncName}',
             '\n\t\t{',
-            f'\n\t\t\tEditorSceneManager.OpenScene({scene1RelativePath});',
-            '\n\t\t}',
+            f'\n\t\t\tEditorSceneManager.OpenScene("{scene1RelativePath}");',
+            '\n\t\t}\n',
             f'\n\t\t{scene2Attr}',
             f'\n\t\tstatic void {scene2FuncName}',
             '\n\t\t{',
-            f'\n\t\t\tEditorSceneManager.OpenScene({scene2RelativePath});',
-            '\n\t\t}',
+            f'\n\t\t\tEditorSceneManager.OpenScene("{scene2RelativePath}");',
+            '\n\t\t}\n',
             f'\n\t\t{scene3Attr}',
             f'\n\t\tstatic void {scene3FuncName}',
             '\n\t\t{',
-            f'\n\t\t\tEditorSceneManager.OpenScene({scene3RelativePath});',
-            '\n\t\t}',
+            f'\n\t\t\tEditorSceneManager.OpenScene("{scene3RelativePath}");',
+            '\n\t\t}\n',
             '\n\t}',
             '\n}'
         ]
@@ -168,9 +171,9 @@ class SceneSwitcherTests(unittest.TestCase):
         expectedText = ''
         for line in lines:
             expectedText += line 
-        
-        generatedText = sceneSwitcherGenerator.generateFullSceneSwitcherClassByScenesList_CS(scenesAbsPathList)
-
+            
+        generatedText = sceneSwitcherGenerator.generateFullSceneSwitcherClassByScenesList_CS(scenesPath)
+        self.maxDiff = 5959
         self.assertEqual(expectedText, generatedText)
 
 if __name__ == "__main__":

@@ -6,8 +6,8 @@ scriptDir = os.path.dirname(os.path.abspath(__file__))
 if sys.path[0] != scriptDir:
     sys.path[0] = scriptDir
 
-from commonScripts import fileReader
-from commonScripts import filesSearcher
+from ..commonScripts import fileReader
+from ..commonScripts import filesSearcher
 
 testDataRelativePath = "test_data"
 testDataPath = os.path.join(scriptDir, testDataRelativePath)
@@ -33,9 +33,9 @@ class UnityScriptsTests(unittest.TestCase):
         dirPath = os.path.join(testDataPath, testDirName)
         filesData = filesSearcher.findFilesByType(dirPath, ".unity")
 
-        filePath_0 = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets/Scenes/Main.unity'
-        filePath_1 = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets/Scenes/Levels/Level_0.unity'
-        filePath_2 = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/test_data/testUnityProject_0/Assets/Scenes/Levels/Level_1.unity'
+        filePath_0 = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/tests/test_data/testUnityProject_0/Assets/Scenes/Main.unity'
+        filePath_1 = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/tests/test_data/testUnityProject_0/Assets/Scenes/Levels/Level_0.unity'
+        filePath_2 = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/tests/test_data/testUnityProject_0/Assets/Scenes/Levels/Level_1.unity'
         self.assertTrue(len(filesData) > 0)
         self.assertTrue(filePath_0 in filesData)
         self.assertTrue(filePath_1 in filesData)
