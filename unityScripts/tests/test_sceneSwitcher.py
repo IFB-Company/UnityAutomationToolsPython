@@ -114,7 +114,7 @@ class SceneSwitcherTests(unittest.TestCase):
 
     def test_generateFullSceneSwitcherClassByScenesList_CS(self):
         className = sceneSwitcherGenerator.CLASS_NAME_CS
-        defaultNameSpace = sceneSwitcherGenerator.DEFAULT_NAMESPACE_CS
+        defaultNameSpace = global_info.DEFAULT_NAMESPACE_CS
         
         scenesPath = '/Users/intfloatbool/Documents/SRC/Python/IFB_UnityAutomationTools/unityScripts/tests/test_data/testUnityProject_0/Assets'
         scenesAbsPathList = filesSearcher.findFilesByType(scenesPath, '.unity')

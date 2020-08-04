@@ -19,8 +19,11 @@ for root, dirs, files in os.walk(scriptsPath):
 def runAllTests():
     command = "python3 -m unittest "
     separatorStr = '\n*** *** *** *** *** *** ***\n'
+    separatorStr_second = '\n||| ||| ||| ||| ||| ||| ||| ||| ||| ||| ||| ||| ||| \n'
     print(separatorStr)
+    print(separatorStr_second)
     print('Run tests at: ', datetime.datetime.now())
+    print(separatorStr_second)
     for file in testScriptsPath:
         print(separatorStr)
         fileName = os.path.basename(file)

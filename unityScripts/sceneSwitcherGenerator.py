@@ -11,7 +11,6 @@ from commonScripts import filesSearcher
 
 TOOL_PATH = 'UAT_SceneSwitcher'
 CLASS_NAME_CS = 'SceneSwitcher'
-DEFAULT_NAMESPACE_CS = 'UAT_Generated'
 SCENE_SWITCHER_FILE_NAME = "SceneSwitcher.cs"
 
 FUNCS_BODY_KEY = '[FUNC]'
@@ -61,7 +60,7 @@ def generateSceneSwitcherClassBody(className):
             '\nusing UnityEditor.SceneManagement;',
             '\nusing UnityEngine;',
             '\n',
-            f'\nnamespace {DEFAULT_NAMESPACE_CS}',
+            f'\nnamespace {global_info.DEFAULT_NAMESPACE_CS}',
             '\n{',
             f'\n\tpublic class {className} : MonoBehaviour',
             '\n\t{',
